@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leaflet Web Map</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        h1 {
+            margin: 20px 0;
+        }
+        #map-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 80vh;
+        }
+        #map {
+            width: 80%;
+            max-width: 960px;
+            height: 500px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <h1>Peta Lokasi Teknik Geodesi UGM</h1>
+    <div id="map-container">
+        <div id="map"></div>
+    </div>
+    <script>
+        var map = L.map('map', { 
+            center: [-7.79558, 110.36949], 
+            zoom: 12 
+        }); 
+        
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { 
+            attribution: '&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors' 
+        }).addTo(map);
+        
+        //tambahkan marker
+        var marker = L.marker([-7.7639774, 110.3726576]).bindPopup('<b>Teknik Geodesi UGM</b>').addTo(map);
+        var marker = L.marker([-7.7645792, 110.3721092]).bindPopup('<b>Masjid Teknik UGM</b>').addTo(map);
+        
+        // tambahkan jalur
+        var jalur = L.polyline([
+            [-7.762017, 110.369456], //titik awal
+            [-7.763045, 110.372272], //titik kedua
+            [-7.763264, 110.372635], //titik ketiga
+            [-7.763650, 110.373219], 
+            [-7.763945, 110.373894],
+            [-7.764537, 110.375463],
+            [-7.765899, 110.378409] //titik akhir
+        ], {
+            color: '#8B4513',
+            weight: 10,
+            opacity: 0.8
+        }).addTo(map);
+        jalur.bindPopup("Jalan Pogung Kidul").addTo(map);
+
+        //rumah sakit
+        // Buat Marker dengan Ikon "+" menggunakan DivIcon
+        var plusIcon = L.divIcon({
+            className: 'custom-div-icon',
+            html: "<div style='font-size:25px; font-weight:bold; color:white; background:red; width:30px; height:30px; text-align:center; line-height:30px; border-radius:50%;'>+</div>",
+            iconSize: [30, 30],
+            iconAnchor: [15, 15]
+        });
+        var Marker = L.marker([-7.767997, 110.372918], { icon: plusIcon }).bindPopup("<b>RSUP Dr. Sardjito</b>").addTo(map);
+
+    </script>
+</body>
+</htm>
